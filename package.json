@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html"
   },
   "author": "Venkat",
   "license": "ISC",
@@ -15,5 +15,8 @@
   "devDependencies": {
     "clock": "^1.0.2",
     "process": "^0.11.10"
-  }
+  },
+  "browsersList" : [
+    "last 2 versions"
+  ]
 }
