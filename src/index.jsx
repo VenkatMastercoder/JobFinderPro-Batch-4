@@ -1,6 +1,12 @@
+/* eslint-disable no-unused-vars */
 import "./index.css";
 import ReactDOM from "react-dom/client";
-import { v4 as uuidv4 } from "uuid";
+import Header from "./component/Header/Header";
+import Body from "./component/Body/Body";
+import Footer from "./component/Footer/Footer";
+import { useState } from "react";
+import Counter from "./component/Counter/Counter";
+import Comment from "./component/Comment/Comment";
 
 // Tailwind
 const paragraphElement = <p className="bg-green-500">Hello World</p>; // React Element
@@ -11,118 +17,81 @@ const heading = <h1 className="para">Heading</h1>;
 // Inline CSS
 const spanElement = <span style={{ color: "red" }}>Inline css</span>;
 
-const Header = () => {
-  return <p>Header Component</p>;
-};
+/**
+ * Hooks
+ *  - Its an NorMAL Js Function dev by React Dev
+ *
+ * - useState() - 80%
+ * - useEffect() - 20%
+ *
+ */
 
-const Footer = () => {
-  return <p>Footer Component</p>;
-};
-
-const Card = (props) => {
-  console.log(props);
-
-  console.log(props.jobTile);
-  console.log(props.companyName);
-
-  return (
-    <>
-      <div className="shadow-lg p-5 rounded-3xl">
-        <img
-          src="https://production-cuvette.s3.ap-south-1.amazonaws.com/company/646db8439348312136cf4766/logo.jpg?d=1684912626052"
-          alt="company-logo"
-          className="h-10"
-        />
-        <p>{props.jobTile}</p>
-        <p>{props.companyName}</p>
-        <p>Tags: {props.tags}</p>
-        <p>Job Offer : {props.jobOffer}</p>
-        <p>Start Date : {props.startDate}</p>
-        <p>Experience : {props.experience}</p>
-      </div>
-    </>
-  );
-};
-
-// How to Create A Props - jobTile={"Full Stack"}
-// How to Rec A Props - (props) ==> props.jobTile , props.companyName
-// How to Render a Prop Values
-
-// List
-
-// WARN - backend data - uniq data
-// - index or - uuid
-
-const JobData = [
+const dummyData = [
   {
-    id: 1,
-    jobTile: "Full Stack",
-    companyName: "Kuvi Networks | Bangalore, India",
-    tags: "React",
-    jobOffer: "14 LPA",
-    startDate: "15-06-24",
-    experience: "0-1 Year",
+    name: "ram",
   },
   {
-    id: 2,
-    jobTile: "SDE 2",
-    companyName: "Kuvi Networks | Bangalore, India",
-    tags: "React",
-    jobOffer: "10 LPA",
-    startDate: "15-06-24",
-    experience: "0-1 Year",
+    name: "ram",
   },
   {
-    id: 3,
-    jobTile: "MERN STACK Developer",
-    companyName: "Kuvi Networks | Bangalore, India",
-    tags: "React",
-    jobOffer: "12 LPA",
-    startDate: "15-06-24",
-    experience: "0-1 Year",
+    name: "sam",
+  },
+  {
+    name: "dog",
+  },
+  {
+    name: "car",
+  },
+  {
+    name: "tea",
   },
 ];
 
-const Body = () => {
-  return (
-    <>
-      <p>Search Bar</p>
-      <div className="2xl:container mx-auto">
-        <div className="w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {JobData.map((e) => {
-            return (
-              <>
-                <div key={uuidv4()}>
-                  <Card
-                    jobTile={e.jobTile}
-                    companyName={e.companyName}
-                    tags={e.tags}
-                    jobOffer={e.jobOffer}
-                    startDate={e.startDate}
-                    experience={e.experience}
-                  />
-                </div>
-              </>
-            );
-          })}
-        </div>
-      </div>
-    </>
-  );
-};
-
-const add = (r, b) => {
-  console.log(r + b);
-};
-
-add(5, 5); // Arg 10
-add(6, 5); // 11
-
 const AppLayout = () => {
+  const [data,setData] = useState(dummyData)
+  const [searchText, setSearchText] = useState();
+  const [filterData,setFilterData] = useState(data)
+
   return (
     <>
       <Header />
-      <Body />
+      {/* <Body />*/}
+      {/* <Counter />
+      <Comment /> */}
+
+      <div className="border border-red-500">
+        <input
+          className="border border-green-500 w-52"
+          placeholder="Enter your name"
+          onChange={(ee) => {
+            const newfilterData = data.filter((e)=>{
+              return  e.name === ee.target.value
+            })
+            setFilterData(newfilterData);
+          }}
+        />
+
+        <button onClick={()=>{
+          const newfilterData = data.filter((e)=>{
+            return  e.name === searchText
+          })
+
+          console.log(searchText,newfilterData)
+
+          setFilterData(newfilterData)
+        }} >Search</button>
+
+        {filterData.map((e, index) => {
+          return (
+            <>
+              <div key={index}>
+                <p>{e.name}</p>
+              </div>
+            </>
+          );
+        })}
+      </div>
+
       <Footer />
     </>
   );
