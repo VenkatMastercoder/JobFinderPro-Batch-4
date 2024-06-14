@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const Counter = () => {
+  
   // let count = 0
   const [count, setCount] = useState(0);
   const [isLoading, setIsloading] = useState(false);
