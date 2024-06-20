@@ -46,7 +46,7 @@ const Comment = () => {
         <button
           className="bg-green-500 w-52"
           onClick={() => {
-            // setCommentData([ data]);
+            // setCommentData([ data ]);
             // setCommentData((prev) => [...prev, data]);
 
             setCommentData((items) => [...items, data]); //

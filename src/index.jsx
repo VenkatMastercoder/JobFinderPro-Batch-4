@@ -4,9 +4,10 @@ import ReactDOM from "react-dom/client";
 import Header from "./component/Header/Header";
 import Body from "./component/Body/Body";
 import Footer from "./component/Footer/Footer";
-import { useState } from "react";
-import Counter from "./component/Counter/Counter";
-import Comment from "./component/Comment/Comment";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import Help from "./component/Help/Help";
+import ErrorPage from "./component/ErrorPage/ErrorPage";
+import Login from "./component/Login/Login";
 
 // Tailwind
 const paragraphElement = <p className="bg-green-500">Hello World</p>; // React Element
@@ -26,76 +27,37 @@ const spanElement = <span style={{ color: "red" }}>Inline css</span>;
  *
  */
 
-const dummyData = [
-  {
-    name: "ram",
-  },
-  {
-    name: "ram",
-  },
-  {
-    name: "sam",
-  },
-  {
-    name: "dog",
-  },
-  {
-    name: "car",
-  },
-  {
-    name: "tea",
-  },
-];
-
 const AppLayout = () => {
-  const [data,setData] = useState(dummyData)
-  const [searchText, setSearchText] = useState();
-  const [filterData,setFilterData] = useState(data)
-
   return (
     <>
       <Header />
-      {/* <Body />*/}
-      {/* <Counter />
-      <Comment /> */}
-
-      <div className="border border-red-500">
-        <input
-          className="border border-green-500 w-52"
-          placeholder="Enter your name"
-          onChange={(ee) => {
-            const newfilterData = data.filter((e)=>{
-              return  e.name === ee.target.value
-            })
-            setFilterData(newfilterData);
-          }}
-        />
-
-        <button onClick={()=>{
-          const newfilterData = data.filter((e)=>{
-            return  e.name === searchText
-          })
-
-          console.log(searchText,newfilterData)
-
-          setFilterData(newfilterData)
-        }} >Search</button>
-
-        {filterData.map((e, index) => {
-          return (
-            <>
-              <div key={index}>
-                <p>{e.name}</p>
-              </div>
-            </>
-          );
-        })}
-      </div>
-
+      <Outlet />
       <Footer />
     </>
   );
 };
 
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/offer",
+        element: <Body />,
+      },
+      {
+        path: "/help",
+        element: <Help />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
+    errorElement: <ErrorPage />,
+  },
+]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);
